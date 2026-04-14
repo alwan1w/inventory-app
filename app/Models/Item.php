@@ -16,6 +16,7 @@ class Item extends Model
         'category_id',
         'sku',
         'name',
+        'image',
         'price',
         'stock'
     ];

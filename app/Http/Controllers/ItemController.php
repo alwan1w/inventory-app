@@ -19,9 +19,21 @@ class ItemController extends Controller
     }
 
     public function store(StoreItemRequest $request){
+        // Ambil semua data yang sudah tervalidasi
+        $validatedData = $request->validated();
+
+        // Cek apakah ada file 'image' yang dikirim
+        if ($request->hasFile('image')) {
+            // Simpan gambar ke folder 'public/items' dan ambil path/nama file-nya
+            $imagePath = $request->file('image')->store('items', 'public');
+
+            // Masukkan path gambar tersebut ke array data sebelum disimpan ke database
+            $validatedData['image'] = $imagePath;
+        }
+
         // Jika kode sampai ke baris ini, artinya data SUDAH PASTI VALID.
         // Kita tinggal ambil data yang sudah tervalidasi dan masukkan ke database.
-        $item = Item::create($request->validated());
+        $item = Item::create($validatedData);
 
         return response()->json([
             'status' => 'success',

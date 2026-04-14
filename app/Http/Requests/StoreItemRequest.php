@@ -30,6 +30,7 @@ class StoreItemRequest extends FormRequest
             'sku' => ['required', 'string', 'unique:items,sku'],
 
             'name' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image','mimes:jpg,jpeg,png', 'max:2048'], // Maksimal 2MB
             'price' => ['required', 'numeric', 'min:0'],
 
             // Stok minimal 0, tidak boleh minus
